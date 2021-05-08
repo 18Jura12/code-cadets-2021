@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"os"
+	"strings"
 )
 
 type application struct {
@@ -20,7 +21,6 @@ const URL = "https://run.mocky.io/v3/f7ceece5-47ee-4955-b974-438982267dc8"
 
 func main() {
 	httpClient := pester.New()
-	//httpClient.Backoff = linearBackoff
 
 	httpResponse, err := httpClient.Get(URL)
 	if err != nil {
@@ -52,28 +52,25 @@ func main() {
 	}
 	defer f.Close()
 
-	for _, application := range applications {
-		if application.Passed {
-			var hasSkills = false
-			for _, skill := range application.Skills {
-				if skill == "Java" || skill == "Go" { hasSkills = true }
-			}
-			if hasSkills {
-				var data string
-				data = application.Name + " - "
-				for idx, skill := range application.Skills {
-					data += skill
-					if idx != len(application.Skills) - 1 {
-						data += ", "
-					} else {
-						data += "\n"
-					}
-				}
-				f.WriteString(data)
-			}
-		}
+	for _, userApplication := range applications {
+		if !userApplication.Passed { continue }
+		if 	!contains(userApplication.Skills, "Java") &&
+			!contains(userApplication.Skills, "Go") { continue }
+		var data string
+		data = 	userApplication.Name + " - " +
+				strings.Join(userApplication.Skills, ", ") + "\n"
+		f.WriteString(data)
 	}
 
+}
+
+func contains(s []string, e string) bool {
+	for _, a := range s {
+		if a == e {
+			return true
+		}
+	}
+	return false
 }
 
 

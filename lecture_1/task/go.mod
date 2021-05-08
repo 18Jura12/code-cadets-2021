@@ -1,4 +1,4 @@
-module code-cadets-2021/lecture_1/07_testing
+module code-cadets-2021/lecture_1/task
 
 go 1.15
 
