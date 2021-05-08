@@ -54,16 +54,13 @@ func main() {
 
 	for _, val := range decodedContent {
 		if val.Passed {
-			var HasJava = false
-			var HasGo = false
+			var HasSkills = false
 			for _, skill := range val.Skills {
-				if skill == "Java" { HasJava = true }
-				if skill == "Go" { HasGo = true }
+				if skill == "Java" || skill == "Go" { HasSkills = true }
 			}
-			if HasJava || HasGo {
+			if HasSkills {
 				var data string
-				data += val.Name
-				data += " - "
+				data = val.Name + " - "
 				for idx, skill := range val.Skills {
 					data += skill
 					if idx != len(val.Skills) - 1 {
