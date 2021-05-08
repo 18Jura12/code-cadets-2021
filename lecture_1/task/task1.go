@@ -36,8 +36,8 @@ func main() {
 		)
 	}
 
-	var decodedContent []application
-	err = json.Unmarshal(bodyContent, &decodedContent)
+	var applications []application
+	err = json.Unmarshal(bodyContent, &applications)
 	if err != nil {
 		log.Fatal(
 			errors.WithMessage(err, "unmarshalling the JSON body content"),
@@ -52,18 +52,18 @@ func main() {
 	}
 	defer f.Close()
 
-	for _, val := range decodedContent {
-		if val.Passed {
-			var HasSkills = false
-			for _, skill := range val.Skills {
-				if skill == "Java" || skill == "Go" { HasSkills = true }
+	for _, application := range applications {
+		if application.Passed {
+			var hasSkills = false
+			for _, skill := range application.Skills {
+				if skill == "Java" || skill == "Go" { hasSkills = true }
 			}
-			if HasSkills {
+			if hasSkills {
 				var data string
-				data = val.Name + " - "
-				for idx, skill := range val.Skills {
+				data = application.Name + " - "
+				for idx, skill := range application.Skills {
 					data += skill
-					if idx != len(val.Skills) - 1 {
+					if idx != len(application.Skills) - 1 {
 						data += ", "
 					} else {
 						data += "\n"
