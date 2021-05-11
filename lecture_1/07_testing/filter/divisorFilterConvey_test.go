@@ -1,5 +1,6 @@
 package filter_test
 
+// . je isto što i using, ali se izbjegava zbog potencijalnih name clasheva
 import (
 	"fmt"
 	"testing"
