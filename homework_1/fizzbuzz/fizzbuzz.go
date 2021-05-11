@@ -1,19 +1,26 @@
 package fizzbuzz
 
 import (
-	"fmt"
+	"github.com/pkg/errors"
+	"strconv"
 )
 
-func Fizzbuzz(start, end int) {
+func Fizzbuzz(start, end int) (string, error) {
 
+	if start > end {
+		return "", errors.New("Start is greater than end!")
+	}
+
+	output := ""
 	for i := start; i <= end; i++ {
-		output := fizz(i) + buzz(i)
-		if output == "" {
-			fmt.Printf("%v ", i)
+		number := fizz(i) + buzz(i)
+		if number == "" {
+			output += strconv.Itoa(i) + " "
 		} else {
-			fmt.Printf("%v ", output)
+			output += number + " "
 		}
 	}
+	return output, nil
 
 }
 
