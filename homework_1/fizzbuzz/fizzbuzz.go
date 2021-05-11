@@ -1,18 +1,35 @@
-package main
+package fizzbuzz
 
 import (
-	"flag"
+	"fmt"
 )
 
-func main() {
-
-	var start, end int
-	flag.IntVar(&start, "start", 1, "number to start the game from")
-	flag.IntVar(&end, "end", 10, "number to stop the game at")
+func Fizzbuzz(start, end int) {
 
 	for i := start; i <= end; i++ {
-
+		output := fizz(i) + buzz(i)
+		if output == "" {
+			fmt.Printf("%v ", i)
+		} else {
+			fmt.Printf("%v ", output)
+		}
 	}
 
+}
+
+func fizz(x int) string {
+	if x % 3 == 0 {
+		return "Fizz"
+	} else {
+		return ""
+	}
+}
+
+func buzz(x int) string {
+	if x % 5 == 0 {
+		return "Buzz"
+	} else {
+		return ""
+	}
 }
 
