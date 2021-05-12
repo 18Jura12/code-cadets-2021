@@ -1,6 +1,6 @@
 // Defining the name of this package. This is the name that will be used when this package is
 // imported by other packages. Most often the same name as the folder it is contained in.
-// `main` is a special package with the `main` function which is the entry point of the program.
+// `fizzbuzz` is a special package with the `fizzbuzz` function which is the entry point of the program.
 package main
 
 // Import statements in order to import functionality from other packages.
@@ -38,7 +38,7 @@ func linearBackoff(retry int) time.Duration {
 	return time.Duration(retry) * time.Second
 }
 
-// `main` function, entry-point of a Go program.
+// `fizzbuzz` function, entry-point of a Go program.
 func main() {
 	// Calling `New()` from `pester` package to create an http client. Notice that by using the
 	// `:=` notation the type of the variable will be inferred.
