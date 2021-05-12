@@ -13,16 +13,16 @@ func init() {
 
 func TestFizzbuzz(t *testing.T) {
 
-	for idx, tc := range getTestCases() {
-		Convey(fmt.Sprintf("Given test case #%v: %+v", idx, tc), t, func() {
+	for index, testCase := range getTestCases() {
+		Convey(fmt.Sprintf("Given test case #%v: %+v", index, testCase), t, func() {
 
-			actualOutput, actualErr := fizzbuzz.Fizzbuzz(tc.inputStart, tc.inputEnd)
+			actualOutput, actualErr := fizzbuzz.Fizzbuzz(testCase.inputStart, testCase.inputEnd)
 
-			if tc.expectingError {
+			if testCase.expectingError {
 				So(actualErr, ShouldNotBeNil)
 			} else {
 				So(actualErr, ShouldBeNil)
-				So(actualOutput, ShouldResemble, tc.expectedOutput)
+				So(actualOutput, ShouldResemble, testCase.expectedOutput)
 			}
 
 		})
