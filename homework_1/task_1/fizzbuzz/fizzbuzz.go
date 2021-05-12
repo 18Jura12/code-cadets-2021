@@ -8,7 +8,7 @@ import (
 func Fizzbuzz(start, end int) (string, error) {
 
 	if start > end {
-		return "", errors.New("Start is greater than end!")
+		return "", errors.New("start is greater than end")
 	}
 
 	output := ""
