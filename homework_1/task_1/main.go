@@ -1,9 +1,9 @@
 package main
 
 import (
-	"code-cadets-2021/homework_1/task_1/fizzbuzz"
 	"flag"
 	"fmt"
+	"task1/fizzbuzz"
 )
 
 

@@ -1,9 +1,9 @@
 package fizzbuzz_test
 
 import (
-	"code-cadets-2021/homework_1/task_1/fizzbuzz"
 	"fmt"
 	. "github.com/smartystreets/goconvey/convey"
+	"task1/fizzbuzz"
 	"testing"
 )
 
