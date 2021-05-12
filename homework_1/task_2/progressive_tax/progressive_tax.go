@@ -1,4 +1,4 @@
-package progressive_tax
+package progressivetax
 
 import (
 	"fmt"

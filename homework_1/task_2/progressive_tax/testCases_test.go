@@ -1,4 +1,4 @@
-package progressive_tax_test
+package progressivetax_test
 
 type testCase struct {
 
