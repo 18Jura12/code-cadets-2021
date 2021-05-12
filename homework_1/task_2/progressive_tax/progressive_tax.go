@@ -34,14 +34,14 @@ func CalculateTax(value string) (string, error) {
 	}
 
 	if !checkTaxClasses(taxRates) {
-		return "", errors.New("Wrong tax rates!")
+		return "", errors.New("wrong tax rates")
 	}
 
 	input := strings.Fields(value)
 
 	if len(input) != 2 {
 		fmt.Println(len(input))
-		return "", errors.New("Wrong value input format!")
+		return "", errors.New("wrong value input format")
 	}
 
 	income, err := strconv.Atoi(input[0])
@@ -49,7 +49,7 @@ func CalculateTax(value string) (string, error) {
 		return "", err
 	}
 	if income < 0 {
-		return "", errors.New("Income cannot be negative!")
+		return "", errors.New("income cannot be negative")
 	}
 
 	result := 0.0
