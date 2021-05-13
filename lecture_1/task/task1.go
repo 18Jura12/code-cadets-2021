@@ -11,8 +11,8 @@ import (
 )
 
 type application struct {
-	Name string
-	Age int
+	Name   string
+	Age    int
 	Passed bool
 	Skills []string
 }
@@ -53,12 +53,16 @@ func main() {
 	defer f.Close()
 
 	for _, userApplication := range applications {
-		if !userApplication.Passed { continue }
-		if 	!contains(userApplication.Skills, "Java") &&
-			!contains(userApplication.Skills, "Go") { continue }
+		if !userApplication.Passed {
+			continue
+		}
+		if !contains(userApplication.Skills, "Java") &&
+			!contains(userApplication.Skills, "Go") {
+			continue
+		}
 		var data string
-		data = 	userApplication.Name + " - " +
-				strings.Join(userApplication.Skills, ", ") + "\n"
+		data = userApplication.Name + " - " +
+			strings.Join(userApplication.Skills, ", ") + "\n"
 		f.WriteString(data)
 	}
 
@@ -72,6 +76,3 @@ func contains(s []string, e string) bool {
 	}
 	return false
 }
-
-
-
