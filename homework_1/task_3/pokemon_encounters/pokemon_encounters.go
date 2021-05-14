@@ -4,15 +4,18 @@ import (
 	"encoding/json"
 	"flag"
 	"fmt"
+	"io/ioutil"
+
 	"github.com/pkg/errors"
 	"github.com/sethgrid/pester"
-	"io/ioutil"
 )
 
 type Area struct {
-	Location struct {
-		Name string
-	} `json:"location_area"`
+	LocationArea Location `json:"location_area"`
+}
+
+type Location struct {
+	Name string
 }
 
 type Pokemon struct {
@@ -25,15 +28,20 @@ type PokemonEncounters struct {
 	Places []string
 }
 
+const URL = "https://pokeapi.co/api/v2/pokemon/"
+
 func GetAreas() error {
 
-	url := "https://pokeapi.co/api/v2/pokemon/"
-
 	var input string
-	flag.StringVar(&input, "pokemon", "1", "name or number of pokemon ( --pokemon _ )")
+	flag.StringVar(&input, "pokemon", "", "name or number of pokemon ( --pokemon _ )")
+
 	flag.Parse()
 
-	url += input
+	if input == "" {
+		return errors.New("pokemon name/number not provided")
+	}
+
+	url := URL + input
 
 	bodyContentPokemon, err := getRequest(url)
 	if err != nil {
@@ -59,7 +67,7 @@ func GetAreas() error {
 
 	var placeList []string
 	for _, place := range places {
-		placeList = append(placeList, place.Location.Name)
+		placeList = append(placeList, place.LocationArea.Name)
 	}
 
 	pokemonEncounters := PokemonEncounters{
@@ -67,7 +75,11 @@ func GetAreas() error {
 		Places:placeList,
 	}
 
-	output, _ := json.MarshalIndent(pokemonEncounters, "", "\t")
+	output, err := json.MarshalIndent(pokemonEncounters, "", "\t")
+	if err != nil {
+		return err
+	}
+
 	fmt.Println(string(output))
 
 	return nil
