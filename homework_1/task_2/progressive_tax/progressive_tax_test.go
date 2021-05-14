@@ -1,10 +1,12 @@
 package progressivetax_test
 
 import (
-	"task2/progressive_tax"
 	"fmt"
-	. "github.com/smartystreets/goconvey/convey"
 	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
+
+	"task2/progressive_tax"
 )
 
 func TestCalculateTax(t *testing.T) {
@@ -12,7 +14,7 @@ func TestCalculateTax(t *testing.T) {
 	for index, testCase := range getTestCases() {
 		Convey(fmt.Sprintf("Given test case #%v: %+v", index, testCase), t, func() {
 
-			actualOutput, actualErr := progressivetax.CalculateTax(testCase.inputIncome)
+			actualOutput, actualErr := progressivetax.CalculateTax(testCase.inputIncome, testCase.inputTaxBrackets)
 
 			if testCase.expectingError {
 				So(actualErr, ShouldNotBeNil)
