@@ -2,14 +2,12 @@ package fizzbuzz_test
 
 import (
 	"fmt"
-	. "github.com/smartystreets/goconvey/convey"
-	"task1/fizzbuzz"
 	"testing"
+
+	. "github.com/smartystreets/goconvey/convey"
+
+	"task1/fizzbuzz"
 )
-
-func init() {
-
-}
 
 func TestFizzbuzz(t *testing.T) {
 

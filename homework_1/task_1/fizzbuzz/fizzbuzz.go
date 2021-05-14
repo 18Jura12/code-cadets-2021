@@ -2,22 +2,23 @@ package fizzbuzz
 
 import (
 	"github.com/pkg/errors"
+
 	"strconv"
 )
 
-func Fizzbuzz(start, end int) (string, error) {
+func Fizzbuzz(start, end int) ([]string, error) {
 
 	if start > end {
-		return "", errors.New("start is greater than end")
+		return nil, errors.New("start is greater than end")
 	}
 
-	output := ""
+	var output []string
 	for i := start; i <= end; i++ {
 		number := fizz(i) + buzz(i)
 		if number == "" {
-			output += strconv.Itoa(i) + " "
+			output = append(output, strconv.Itoa(i))
 		} else {
-			output += number + " "
+			output = append(output, number)
 		}
 	}
 	return output, nil
@@ -39,4 +40,3 @@ func buzz(x int) string {
 		return ""
 	}
 }
-
