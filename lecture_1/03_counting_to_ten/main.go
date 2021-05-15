@@ -1,6 +1,9 @@
 package main
 
-import "log"
+import (
+	"fmt" //dodatne stvari za formatiranje
+	"log"  //neki drugi loggeri mogu informirati da se vidi greška na serveru
+)
 
 func main() {
 
@@ -10,7 +13,7 @@ func main() {
 
 	i := 0
 	for i <= 10 {
-		log.Println(i)
+		fmt.Println(i)
 		i++
 	}
 
