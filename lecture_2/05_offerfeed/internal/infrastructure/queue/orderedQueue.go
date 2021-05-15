@@ -17,7 +17,7 @@ type OrderedQueue struct {
 
 func NewOrderedQueue() *OrderedQueue {
 	return &OrderedQueue{
-		source: make(chan models.Odd, 10),
+		source: make(chan models.Odd),
 	}
 }
 
@@ -26,14 +26,28 @@ func (o *OrderedQueue) Start(ctx context.Context) error {
 
 	// initially:
 	// - load existing data from disk
+	err := o.loadFromFile()
+	if err != nil {
+
+	}
+
 	//
 	// repeatedly:
 	// - read source channel
 	// - update queue slice
 	// - when source channel is closed, exit
+	for sourceInput := range o.source {
+		o.queue = append(o.queue, sourceInput)
+	}
+
 	//
 	// finally:
 	// - store queue slice to disk
+	err = o.storeToFile()
+	if err != nil {
+
+	}
+
 	return nil
 }
 
