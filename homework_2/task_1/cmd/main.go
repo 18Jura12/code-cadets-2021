@@ -1,8 +1,8 @@
 package main
 
 import (
-	"code-cadets-2021/lecture_2/05_offerfeed/cmd/bootstrap"
-	"code-cadets-2021/lecture_2/05_offerfeed/internal/tasks"
+	"task_1/cmd/bootstrap"
+	"task_1/internal/tasks"
 )
 
 func main() {

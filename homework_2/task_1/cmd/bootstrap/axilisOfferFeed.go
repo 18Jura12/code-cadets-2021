@@ -2,8 +2,7 @@ package bootstrap
 
 import (
 	stdhttp "net/http"
-
-	"code-cadets-2021/lecture_2/05_offerfeed/internal/infrastructure/http"
+	"task_1/internal/infrastructure/http"
 )
 
 func NewAxilisOfferFeed() *http.AxilisOfferFeed {

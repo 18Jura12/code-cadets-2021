@@ -1,8 +1,8 @@
 package services
 
 import (
-	"code-cadets-2021/lecture_2/05_offerfeed/internal/domain/models"
 	"context"
+	"task_1/internal/domain/models"
 )
 
 type FeedProcessorService struct {

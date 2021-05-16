@@ -4,8 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"os"
-
-	"code-cadets-2021/lecture_2/05_offerfeed/internal/domain/models"
+	"task_1/internal/domain/models"
 
 	"github.com/pkg/errors"
 )
