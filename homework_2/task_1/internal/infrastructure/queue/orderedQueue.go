@@ -27,7 +27,7 @@ func (o *OrderedQueue) Start(ctx context.Context) error {
 	// - load existing data from disk
 	err := o.loadFromFile()
 	if err != nil {
-
+		return err
 	}
 
 	//
@@ -44,7 +44,7 @@ func (o *OrderedQueue) Start(ctx context.Context) error {
 	// - store queue slice to disk
 	err = o.storeToFile()
 	if err != nil {
-
+		return err
 	}
 
 	return nil

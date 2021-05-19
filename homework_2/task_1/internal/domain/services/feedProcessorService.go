@@ -2,15 +2,16 @@ package services
 
 import (
 	"context"
+	"reflect"
 	"task_1/internal/domain/models"
 )
 
 type FeedProcessorService struct {
-	feed Feed
+	feed []Feed
 	queue Queue
 }
 
-func NewFeedProcessorService(_feed Feed, _queue Queue) *FeedProcessorService {
+func NewFeedProcessorService(_queue Queue, _feed []Feed) *FeedProcessorService {
 	// it should receive "Feed" & "Queue" interfaces through constructor
 	return &FeedProcessorService{
 		_feed,
@@ -21,18 +22,43 @@ func NewFeedProcessorService(_feed Feed, _queue Queue) *FeedProcessorService {
 func (f *FeedProcessorService) Start(ctx context.Context) error {
 	// initially:
 	// - get updates channel from feed interface
+	var updates []chan models.Odd
+	for _, feedInstance := range f.feed {
+		updates = append(updates, feedInstance.GetUpdates())
+	}
+
 	// - get source channel from queue interface
-	updates := f.feed.GetUpdates()
 	source := f.queue.GetSource()
+
 	//
 	// repeatedly:
 	// - range over updates channel
 	// - multiply each odd with 2
 	// - send it to source channel
-	for update := range updates {
-		update.Coefficient *= 2
-		source <- update
+
+	cases := make([]reflect.SelectCase, len(updates))
+	for i, update := range updates {
+		cases[i] = reflect.SelectCase{
+			Dir:  reflect.SelectRecv,
+			Chan: reflect.ValueOf(update),
+			Send: reflect.Value{},
+		}
 	}
+
+	closedSources := 0
+	for {
+		_, input, ok := reflect.Select(cases)
+		odd := input.Interface().(models.Odd)
+		odd.Coefficient *= 2
+		source <- odd
+		if !ok {
+			closedSources++
+		}
+		if closedSources == len(cases) {
+			break
+		}
+	}
+
 	close(source)
 	//
 	// finally:
