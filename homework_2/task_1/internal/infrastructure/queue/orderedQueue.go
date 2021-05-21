@@ -3,7 +3,6 @@ package queue
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"os"
 	"task_1/internal/domain/models"
 
@@ -30,8 +29,6 @@ func (o *OrderedQueue) Start(ctx context.Context) error {
 	for sourceInput := range o.source {
 		o.queue = append(o.queue, sourceInput)
 	}
-
-	fmt.Println("prošao")
 
 	err = o.storeToFile()
 	if err != nil {
@@ -64,7 +61,6 @@ func (o *OrderedQueue) loadFromFile() error {
 }
 
 func (o *OrderedQueue) storeToFile() error {
-	fmt.Println("file")
 	f, err := os.Create("queue.txt")
 	if err != nil {
 		return errors.Wrap(err, "store to file, create")

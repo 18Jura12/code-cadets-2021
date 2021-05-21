@@ -27,11 +27,6 @@ func NewAxilisOfferFeed(
 }
 
 func (a *AxilisOfferFeed) Start(ctx context.Context) error {
-	// repeatedly:
-	// - get odds from HTTP server
-	// - write them to updates channel
-	// - if context is finished, exit and close updates channel
-	// (test your program from cmd/main.go)
 	defer close(a.updates)
 
 	for {
