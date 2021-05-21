@@ -15,7 +15,7 @@ func NewSignalHandler() *SignalHandler {
 }
 
 func (s *SignalHandler) Start(ctx context.Context) error {
-	defer log.Printf("shutting down %s", s)
+	defer log.Printf("shutting down %v", s)
 
 	signals := make(chan os.Signal, 1)
 	signal.Notify(signals, syscall.SIGINT, syscall.SIGTERM)

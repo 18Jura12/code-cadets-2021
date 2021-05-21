@@ -45,16 +45,15 @@ func (f *FeedProcessorService) Start(ctx context.Context) error {
 		}
 	}
 
-	closedSources := 0
 	for {
-		_, input, ok := reflect.Select(cases)
+		index , input, ok := reflect.Select(cases)
 		odd := input.Interface().(models.Odd)
 		odd.Coefficient *= 2
 		source <- odd
 		if !ok {
-			closedSources++
+			cases = append(cases[:index-1], cases[index+1:]...)
 		}
-		if closedSources == len(cases) {
+		if len(cases) == 0 {
 			break
 		}
 	}

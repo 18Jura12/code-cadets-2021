@@ -42,7 +42,6 @@ func (a *AxilisOfferFeed) Start(ctx context.Context) error {
 				fmt.Println("finsihed")
 				return nil
 			case <-timeout:
-				fmt.Println("1")
 				httpResponse, err := a.httpClient.Get(axilisFeedURL)
 				if err != nil {
 					return errors.WithMessage(err, "response")
@@ -64,38 +63,9 @@ func (a *AxilisOfferFeed) Start(ctx context.Context) error {
 						Name:        odd.Name,
 						Match:       odd.Match,
 						Coefficient: odd.Details.Price,
-						Timestamp:   time.Time{},
+						Timestamp:   time.Now(),
 					}
 				}
-			//case <-timeout:
-			//	fmt.Println("2")
-			//	httpResponse, err := a.httpClient.Get(secondFeedURL)
-			//	if err != nil {
-			//		return errors.WithMessage(err, "response 2")
-			//	}
-			//
-			//	bodyContent, err := ioutil.ReadAll(httpResponse.Body)
-			//	if err != nil {
-			//		return errors.WithMessage(err, "body 2")
-			//	}
-			//
-			//	input := string(bodyContent)
-			//	inputs := strings.Split(input, "\n")
-			//	for _, item := range inputs {
-			//		content := strings.Split(item, ",")
-			//		coef, err := strconv.ParseFloat(content[3], 64)
-			//		if err != nil {
-			//			return errors.WithMessage(err,"parse float")
-			//		}
-			//
-			//		a.updates <- models.Odd{
-			//			Id:          content[0],
-			//			Name:        content[1],
-			//			Match:       content[2],
-			//			Coefficient: coef,
-			//			Timestamp:   time.Time{},
-			//		}
-			//	}
 		}
 	}
 }

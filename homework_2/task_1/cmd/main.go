@@ -1,6 +1,7 @@
 package main
 
 import (
+	stdhttp "net/http"
 	"task_1/cmd/bootstrap"
 	"task_1/internal/domain/services"
 	"task_1/internal/tasks"
@@ -9,8 +10,10 @@ import (
 func main() {
 	signalHandler := bootstrap.NewSignalHandler()
 
-	feed := bootstrap.NewAxilisOfferFeed()
-	feed2 := bootstrap.NewAxilisOfferFeed2()
+	client := stdhttp.Client{}
+
+	feed := bootstrap.NewAxilisOfferFeed(client)
+	feed2 := bootstrap.NewAxilisOfferFeed2(client)
 	queue := bootstrap.NewOrderedQueue()
 	feedProcessorService := bootstrap.NewFeedProcessorService(queue, []services.Feed {feed, feed2})
 

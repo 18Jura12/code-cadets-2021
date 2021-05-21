@@ -1,4 +1,4 @@
-package http2
+package http
 
 import (
 	"context"
@@ -16,21 +16,21 @@ import (
 
 const secondFeedURL = "http://18.193.121.232/axilis-feed-2"
 
-type AxilisOfferFeed struct {
+type AxilisOfferFeed2 struct {
 	httpClient http.Client
 	updates    chan models.Odd
 }
 
-func NewAxilisOfferFeed(
+func NewAxilisOfferFeed2(
 	httpClient http.Client,
-) *AxilisOfferFeed {
-	return &AxilisOfferFeed{
+) *AxilisOfferFeed2 {
+	return &AxilisOfferFeed2{
 		httpClient: httpClient,
 		updates:    make(chan models.Odd),
 	}
 }
 
-func (a *AxilisOfferFeed) Start(ctx context.Context) error {
+func (a *AxilisOfferFeed2) Start(ctx context.Context) error {
 	// repeatedly:
 	// - get odds from HTTP server
 	// - write them to updates channel
@@ -44,32 +44,6 @@ func (a *AxilisOfferFeed) Start(ctx context.Context) error {
 			case <-ctx.Done():
 				fmt.Println("finsihed")
 				return nil
-			//case <-timeout:
-			//	fmt.Println("1")
-			//	httpResponse, err := a.httpClient.Get(axilisFeedURL)
-			//	if err != nil {
-			//		return errors.WithMessage(err, "response")
-			//	}
-			//
-			//	bodyContent, err := ioutil.ReadAll(httpResponse.Body)
-			//	if err != nil {
-			//		return errors.WithMessage(err, "body")
-			//	}
-			//
-			//	var input []axilisOfferOdd
-			//	err = json.Unmarshal(bodyContent, &input)
-			//	if err != nil {
-			//		return errors.WithMessage(err, "unmarshal")
-			//	}
-			//	for _, odd := range input {
-			//		a.updates <- models.Odd{
-			//			Id:          odd.Id,
-			//			Name:        odd.Name,
-			//			Match:       odd.Match,
-			//			Coefficient: odd.Details.Price,
-			//			Timestamp:   time.Time{},
-			//		}
-			//	}
 			case <-timeout:
 				httpResponse, err := a.httpClient.Get(secondFeedURL)
 				if err != nil {
@@ -95,24 +69,13 @@ func (a *AxilisOfferFeed) Start(ctx context.Context) error {
 						Name:        content[1],
 						Match:       content[2],
 						Coefficient: coef,
-						Timestamp:   time.Time{},
+						Timestamp:   time.Now(),
 					}
 				}
 		}
 	}
 }
 
-func (a *AxilisOfferFeed) GetUpdates() chan models.Odd {
+func (a *AxilisOfferFeed2) GetUpdates() chan models.Odd {
 	return a.updates
-}
-
-type axilisOfferOdd struct {
-	Id      string
-	Name    string
-	Match   string
-	Details axilisOfferOddDetails
-}
-
-type axilisOfferOddDetails struct {
-	Price float64
 }

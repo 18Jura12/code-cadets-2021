@@ -20,7 +20,7 @@ func RunTasks(tasks ...Task) {
 			defer cancel()
 
 			err := task.Start(ctx)
-			fmt.Printf(`"%s" finished with "%v" error`, task, err)
+			fmt.Printf(`"%v" finished with "%v" error`, task, err)
 		}(i, task)
 	}
 
