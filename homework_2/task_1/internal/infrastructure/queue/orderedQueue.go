@@ -3,6 +3,7 @@ package queue
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"os"
 	"task_1/internal/domain/models"
 
@@ -21,27 +22,17 @@ func NewOrderedQueue() *OrderedQueue {
 }
 
 func (o *OrderedQueue) Start(ctx context.Context) error {
-	// ignore ctx parameter, we will use it later :)
-
-	// initially:
-	// - load existing data from disk
 	err := o.loadFromFile()
 	if err != nil {
 		return err
 	}
 
-	//
-	// repeatedly:
-	// - read source channel
-	// - update queue slice
-	// - when source channel is closed, exit
 	for sourceInput := range o.source {
 		o.queue = append(o.queue, sourceInput)
 	}
 
-	//
-	// finally:
-	// - store queue slice to disk
+	fmt.Println("prošao")
+
 	err = o.storeToFile()
 	if err != nil {
 		return err
@@ -73,6 +64,7 @@ func (o *OrderedQueue) loadFromFile() error {
 }
 
 func (o *OrderedQueue) storeToFile() error {
+	fmt.Println("file")
 	f, err := os.Create("queue.txt")
 	if err != nil {
 		return errors.Wrap(err, "store to file, create")
@@ -98,4 +90,8 @@ func (o *OrderedQueue) storeToFile() error {
 	}
 
 	return nil
+}
+
+func (o *OrderedQueue) String() string {
+	return "ordered queue"
 }

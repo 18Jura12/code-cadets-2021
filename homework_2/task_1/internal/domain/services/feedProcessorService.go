@@ -20,21 +20,12 @@ func NewFeedProcessorService(_queue Queue, _feed []Feed) *FeedProcessorService {
 }
 
 func (f *FeedProcessorService) Start(ctx context.Context) error {
-	// initially:
-	// - get updates channel from feed interface
 	var updates []chan models.Odd
 	for _, feedInstance := range f.feed {
 		updates = append(updates, feedInstance.GetUpdates())
 	}
 
-	// - get source channel from queue interface
 	source := f.queue.GetSource()
-
-	//
-	// repeatedly:
-	// - range over updates channel
-	// - multiply each odd with 2
-	// - send it to source channel
 
 	cases := make([]reflect.SelectCase, len(updates))
 	for i, update := range updates {
@@ -47,15 +38,16 @@ func (f *FeedProcessorService) Start(ctx context.Context) error {
 
 	for {
 		index , input, ok := reflect.Select(cases)
-		odd := input.Interface().(models.Odd)
-		odd.Coefficient *= 2
-		source <- odd
 		if !ok {
-			cases = append(cases[:index-1], cases[index+1:]...)
+			cases = append(cases[:index], cases[index+1:]...)
+			continue
 		}
 		if len(cases) == 0 {
 			break
 		}
+		odd := input.Interface().(models.Odd)
+		odd.Coefficient *= 2
+		source <- odd
 	}
 
 	close(source)
@@ -76,4 +68,8 @@ type Feed interface {
 type Queue interface {
 	GetSource() chan models.Odd
 	Start(ctx context.Context) error
+}
+
+func (f *FeedProcessorService) String() string {
+	return "feed processor service"
 }

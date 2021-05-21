@@ -2,7 +2,6 @@ package http
 
 import (
 	"context"
-	"fmt"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -42,7 +41,6 @@ func (a *AxilisOfferFeed2) Start(ctx context.Context) error {
 		timeout := time.After(time.Second)
 		select {
 			case <-ctx.Done():
-				fmt.Println("finsihed")
 				return nil
 			case <-timeout:
 				httpResponse, err := a.httpClient.Get(secondFeedURL)
@@ -78,4 +76,8 @@ func (a *AxilisOfferFeed2) Start(ctx context.Context) error {
 
 func (a *AxilisOfferFeed2) GetUpdates() chan models.Odd {
 	return a.updates
+}
+
+func (a *AxilisOfferFeed2) String() string {
+	return "axilis offer feed 2"
 }

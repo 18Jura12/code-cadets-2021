@@ -3,7 +3,6 @@ package http
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"net/http"
@@ -39,7 +38,6 @@ func (a *AxilisOfferFeed) Start(ctx context.Context) error {
 		timeout := time.After(time.Second)
 		select {
 			case <-ctx.Done():
-				fmt.Println("finsihed")
 				return nil
 			case <-timeout:
 				httpResponse, err := a.httpClient.Get(axilisFeedURL)
@@ -83,4 +81,8 @@ type axilisOfferOdd struct {
 
 type axilisOfferOddDetails struct {
 	Price float64
+}
+
+func (a *AxilisOfferFeed) String() string {
+	return "axilis offer feed"
 }
