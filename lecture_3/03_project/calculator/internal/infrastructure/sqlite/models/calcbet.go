@@ -1,7 +1,6 @@
 package models
 
-// Bet is a storage model representation of a bet.
-type Bet struct {
+type CalcBet struct {
 	Id                   string
 	SelectionId          string
 	SelectionCoefficient int
