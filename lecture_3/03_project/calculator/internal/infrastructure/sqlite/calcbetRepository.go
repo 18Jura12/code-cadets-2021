@@ -31,7 +31,7 @@ func (r *CalcBetRepository) InsertCalcBet(ctx context.Context, bet domainmodels.
 
 func (r *CalcBetRepository) queryInsertCalcBet(ctx context.Context, calcbet storagemodels.CalcBet) error {
 
-	insertBetSQL := "INSERT INTO bets(id, selection_id, selection_coefficient, payment) VALUES (?, ?, ?, ?)"
+	insertBetSQL := "INSERT INTO calc_bets(id, selection_id, selection_coefficient, payment) VALUES (?, ?, ?, ?)"
 	statement, err := r.dbExecutor.PrepareContext(ctx, insertBetSQL)
 	if err != nil {
 		return err
@@ -51,7 +51,7 @@ func (r *CalcBetRepository) UpdateCalcBet(ctx context.Context, bet domainmodels.
 }
 
 func (r *CalcBetRepository) queryUpdateCalcBet(ctx context.Context, bet storagemodels.CalcBet) error {
-	updateBetSQL := "UPDATE bets SET selection_id=?, selection_coefficient=?, payment=? WHERE id=?"
+	updateBetSQL := "UPDATE calc_bets SET selection_id=?, selection_coefficient=?, payment=? WHERE id=?"
 
 	statement, err := r.dbExecutor.PrepareContext(ctx, updateBetSQL)
 	if err != nil {
@@ -76,7 +76,7 @@ func (r *CalcBetRepository) GetCalcBetByID(ctx context.Context, id string) (doma
 }
 
 func (r *CalcBetRepository) queryGetCalcBetByID(ctx context.Context, id string) (storagemodels.CalcBet, error) {
-	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM bets WHERE id='"+id+"';")
+	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM calc_bets WHERE id='"+id+"';")
 	if err != nil {
 		return storagemodels.CalcBet{}, err
 	}
@@ -119,7 +119,7 @@ func (r *CalcBetRepository) GetCalcBetsBySelectionID(ctx context.Context, select
 }
 
 func (r *CalcBetRepository) queryGetCalcBetsBySelectionID(ctx context.Context, selectionId string) ([]storagemodels.CalcBet, error) {
-	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM bets WHERE selectionId='"+selectionId+"';")
+	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM calc_bets WHERE selection_id='"+selectionId+"';")
 	if err != nil {
 		return nil, err
 	}
@@ -148,4 +148,9 @@ func (r *CalcBetRepository) queryGetCalcBetsBySelectionID(ctx context.Context, s
 	}
 
 	return rows, nil
+}
+
+func (r *CalcBetRepository) DeleteCalcBet(ctx context.Context, id string) error {
+	 _, err := r.dbExecutor.QueryContext(ctx, "DELETE FROM calc_bets WHERE id='"+id+"';")
+	 return err
 }

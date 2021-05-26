@@ -15,7 +15,6 @@ type BetConsumer struct {
 	config  ConsumerConfig
 }
 
-// NewEventUpdateConsumer creates and returns a new EventUpdateConsumer.
 func NewBetConsumer(channel Channel, config ConsumerConfig) (*BetConsumer, error) {
 	_, err := channel.QueueDeclare(
 		config.Queue,

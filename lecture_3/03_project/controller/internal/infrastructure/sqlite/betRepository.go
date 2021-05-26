@@ -3,7 +3,7 @@ package sqlite
 import (
 	"context"
 	"database/sql"
-
+	"fmt"
 	"github.com/pkg/errors"
 
 	domainmodels "github.com/superbet-group/code-cadets-2021/lecture_3/03_project/controller/internal/domain/models"
@@ -41,6 +41,7 @@ func (r *BetRepository) queryInsertBet(ctx context.Context, bet storagemodels.Be
 		insertBetSQL := "INSERT INTO bets(id, customer_id, status, selection_id, selection_coefficient, payment) VALUES (?, ?, ?, ?, ?, ?)"
 		statement, err := r.dbExecutor.PrepareContext(ctx, insertBetSQL)
 		if err != nil {
+			fmt.Println("payout")
 			return err
 		}
 

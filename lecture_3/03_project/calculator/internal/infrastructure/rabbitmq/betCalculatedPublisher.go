@@ -8,7 +8,6 @@ import (
 
 	"github.com/pkg/errors"
 	"github.com/streadway/amqp"
-
 )
 
 // BetCalculatedPublisher publishes bets into the desired RabbitMQ queue.

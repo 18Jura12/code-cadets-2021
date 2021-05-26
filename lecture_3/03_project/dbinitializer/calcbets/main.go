@@ -30,7 +30,7 @@ func main() {
 }
 
 func createBetsTable(db *sql.DB) {
-	createBetsTableSQL := `CREATE TABLE bets (
+	createBetsTableSQL := `CREATE TABLE calc_bets (
 		"id" TEXT NOT NULL PRIMARY KEY,
 		"selection_id" TEXT NOT NULL,
 		"selection_coefficient" TEXT NOT NULL,
@@ -47,13 +47,13 @@ func createBetsTable(db *sql.DB) {
 }
 
 func createBetsIndexOnSelection(db *sql.DB) {
-	createBetsIndexOnSelectionSQL := `CREATE INDEX selection_idx ON bets (selection_id);`
+	createBetsIndexOnSelectionSQL := `CREATE INDEX selection_idx ON calc_bets (selection_id);`
 
-	log.Println("Creating selection_idx on bets table...")
+	log.Println("Creating selection_idx on calc_bets table...")
 	statement, err := db.Prepare(createBetsIndexOnSelectionSQL)
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 	statement.Exec()
-	log.Println("selection_idx on bets table created")
+	log.Println("selection_idx on calc_bets table created")
 }

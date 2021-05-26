@@ -20,7 +20,7 @@ func New(betRepository CalcBetRepository) *Handler {
 func (h *Handler) HandleBets(ctx context.Context, bets <-chan rabbitmqmodels.Bet ) {
 	go func() {
 		for bet := range bets {
-			log.Println("Processing bet, betId:", bet.Id)
+			log.Println("Processing bet, betId:", bet.Id, " with selectionId:", bet.SelectionId)
 
 			domainBet := domainmodels.Bet{
 				Id:                   bet.Id,
@@ -32,6 +32,13 @@ func (h *Handler) HandleBets(ctx context.Context, bets <-chan rabbitmqmodels.Bet
 			err := h.betRepository.InsertCalcBet(ctx, domainBet)
 			if err != nil {
 				log.Println("Failed to insert bet, error: ", err)
+				continue
+			}
+
+			select {
+			case <-ctx.Done():
+				return
+			default:
 				continue
 			}
 		}
@@ -61,6 +68,13 @@ func (h *Handler) HandleEventUpdates(
 			}
 
 			for _, domainBet := range domainBets {
+				err = h.betRepository.DeleteCalcBet(ctx, domainBet.Id)
+				if err != nil {
+					log.Println("Failed to delete a bet which was updated, error: ", err)
+				} else {
+					log.Println("Successfully deleted updated bet with id: ", domainBet.Id)
+				}
+
 				var payout = 0.0
 				if eventUpdate.Outcome == "won" {
 					payout = domainBet.SelectionCoefficient * domainBet.Payment

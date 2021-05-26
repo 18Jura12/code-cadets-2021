@@ -10,8 +10,8 @@ import (
 	"github.com/streadway/amqp"
 )
 
-const numberOfBets = 1000
-const numberOfDistinctCustomers = 50
+const numberOfBets = 10
+const numberOfDistinctCustomers = 5
 const numberOfDistinctSelections = 10
 
 type selection struct {
