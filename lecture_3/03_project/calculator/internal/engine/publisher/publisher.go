@@ -15,6 +15,6 @@ func New(betPublisher BetCalculatedPublisher) *Publisher {
 	}
 }
 
-func (p *Publisher) PublishBets(ctx context.Context, bets <-chan rabbitmqmodels.BetCalculated) {
+func (p *Publisher) PublishBetsCalculated(ctx context.Context, bets <-chan rabbitmqmodels.BetCalculated) {
 	p.betCalculatedPublisher.Publish(ctx, bets)
 }

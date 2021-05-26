@@ -13,7 +13,7 @@ type CalcBetRepository struct {
 	calcbetMapper CalcBetMapper
 }
 
-func NewBetRepository(dbExecutor DatabaseExecutor, calcbetMapper CalcBetMapper) *CalcBetRepository {
+func NewCalcBetRepository(dbExecutor DatabaseExecutor, calcbetMapper CalcBetMapper) *CalcBetRepository {
 	return &CalcBetRepository{
 		dbExecutor:    dbExecutor,
 		calcbetMapper: calcbetMapper,
@@ -102,8 +102,8 @@ func (r *CalcBetRepository) queryGetCalcBetByID(ctx context.Context, id string) 
 	}, nil
 }
 
-func (r *CalcBetRepository) GetCalcBetBySelectionID(ctx context.Context, selectionId string) ([]domainmodels.Bet, bool, error) {
-	storageBets, err := r.queryGetCalcBetBySelectionID(ctx, selectionId)
+func (r *CalcBetRepository) GetCalcBetsBySelectionID(ctx context.Context, selectionId string) ([]domainmodels.Bet, bool, error) {
+	storageBets, err := r.queryGetCalcBetsBySelectionID(ctx, selectionId)
 	if err == sql.ErrNoRows {
 		return nil, false, nil
 	}
@@ -118,7 +118,7 @@ func (r *CalcBetRepository) GetCalcBetBySelectionID(ctx context.Context, selecti
 	return domainBets, true, nil
 }
 
-func (r *CalcBetRepository) queryGetCalcBetBySelectionID(ctx context.Context, selectionId string) ([]storagemodels.CalcBet, error) {
+func (r *CalcBetRepository) queryGetCalcBetsBySelectionID(ctx context.Context, selectionId string) ([]storagemodels.CalcBet, error) {
 	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM bets WHERE selectionId='"+selectionId+"';")
 	if err != nil {
 		return nil, err
