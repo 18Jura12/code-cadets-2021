@@ -75,12 +75,8 @@ func (h *Handler) HandleBetsReceived(
 func (h *Handler) HandleBetsCalculated(
 	ctx context.Context,
 	betsCalculated <-chan rabbitmqmodels.BetCalculated,
-) <-chan rabbitmqmodels.Bet {
-	resultingBets := make(chan rabbitmqmodels.Bet)
-
+) {
 	go func() {
-		defer close(resultingBets)
-
 		for betCalculated := range betsCalculated {
 			log.Println("Processing bet calculated, betId:", betCalculated.Id)
 
@@ -105,25 +101,7 @@ func (h *Handler) HandleBetsCalculated(
 				log.Println("Failed to update bet, error: ", err)
 				continue
 			}
-
-			// Calculate the resulting bet, which should be published.
-			resultingBet := rabbitmqmodels.Bet{
-				Id:                   domainBet.Id,
-				CustomerId:           domainBet.CustomerId,
-				Status:               domainBet.Status,
-				SelectionId:          domainBet.SelectionId,
-				SelectionCoefficient: domainBet.SelectionCoefficient,
-				Payment:              domainBet.Payment,
-				Payout:               domainBet.Payout,
-			}
-
-			select {
-			case resultingBets <- resultingBet:
-			case <-ctx.Done():
-				return
-			}
+			log.Println("Updated bet, betId: ", domainBet.Id, ", status: ", domainBet.Status, ", payout: ", domainBet.Payout)
 		}
 	}()
-
-	return resultingBets
 }

@@ -149,8 +149,3 @@ func (r *CalcBetRepository) queryGetCalcBetsBySelectionID(ctx context.Context, s
 
 	return rows, nil
 }
-
-func (r *CalcBetRepository) DeleteCalcBet(ctx context.Context, id string) error {
-	 _, err := r.dbExecutor.QueryContext(ctx, "DELETE FROM calc_bets WHERE id='"+id+"';")
-	 return err
-}

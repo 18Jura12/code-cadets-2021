@@ -63,6 +63,7 @@ func (p *BetCalculatedPublisher) Publish(ctx context.Context, betsCalculated <-c
 				if err != nil {
 					log.Println("Failed to publish the following betCalculated:", betCalculatedJson)
 				}
+				log.Println("Published calculated bet, betId: ", betCalculated.Id, ", status: ", betCalculated.Status)
 			}
 		}
 	}()

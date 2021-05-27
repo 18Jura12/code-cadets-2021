@@ -34,6 +34,7 @@ func (h *Handler) HandleBets(ctx context.Context, bets <-chan rabbitmqmodels.Bet
 				log.Println("Failed to insert bet, error: ", err)
 				continue
 			}
+			log.Println("Inserted bet, betId: ", domainBet.Id, ", selectionId: ", domainBet.SelectionId)
 
 			select {
 			case <-ctx.Done():
@@ -68,13 +69,6 @@ func (h *Handler) HandleEventUpdates(
 			}
 
 			for _, domainBet := range domainBets {
-				err = h.betRepository.DeleteCalcBet(ctx, domainBet.Id)
-				if err != nil {
-					log.Println("Failed to delete a bet which was updated, error: ", err)
-				} else {
-					log.Println("Successfully deleted updated bet with id: ", domainBet.Id)
-				}
-
 				var payout = 0.0
 				if eventUpdate.Outcome == "won" {
 					payout = domainBet.SelectionCoefficient * domainBet.Payment
@@ -88,6 +82,7 @@ func (h *Handler) HandleEventUpdates(
 
 				select {
 				case betsCalculated <- betCalculated:
+					log.Println("Updated bet, betId: ", betCalculated.Id, ", status: ", betCalculated.Status, ", payout: ", betCalculated.Payout)
 				case <-ctx.Done():
 					return
 				}
