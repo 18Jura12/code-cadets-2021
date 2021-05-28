@@ -2,6 +2,7 @@ package handler
 
 import (
 	"context"
+	"github.com/mattn/go-sqlite3"
 	domainmodels "github.com/superbet-group/code-cadets-2021/lecture_3/03_project/calculator/internal/domain/models"
 	rabbitmqmodels "github.com/superbet-group/code-cadets-2021/lecture_3/03_project/calculator/internal/infrastructure/rabbitmq/models"
 	"log"
@@ -30,7 +31,10 @@ func (h *Handler) HandleBets(ctx context.Context, bets <-chan rabbitmqmodels.Bet
 			}
 
 			err := h.betRepository.InsertCalcBet(ctx, domainBet)
-			if err != nil {
+			if err == sqlite3.ErrConstraint {
+				log.Println("bet already exists in calc_bets")
+				continue
+			} else if err != nil {
 				log.Println("Failed to insert bet, error: ", err)
 				continue
 			}
@@ -60,11 +64,11 @@ func (h *Handler) HandleEventUpdates(
 
 			domainBets, exists, err := h.betRepository.GetCalcBetsBySelectionID(ctx, eventUpdate.Id)
 			if err != nil {
-				log.Println("Failed to fetch a bet which should be updated, error: ", err)
+				log.Println("Failed to fetch bets which should be updated, error: ", err)
 				continue
 			}
 			if !exists {
-				log.Println("A bet which should be updated does not exist, selection id: ", eventUpdate.Id)
+				log.Println("Event update references 0 bets, selection id: ", eventUpdate.Id)
 				continue
 			}
 

@@ -58,6 +58,7 @@ func (c *BetConsumer) Consume(ctx context.Context) (<-chan models.Bet, error) {
 			err := json.Unmarshal(msg.Body, &bet)
 			if err != nil {
 				log.Println("Failed to unmarshal bet received message", msg.Body)
+				continue
 			}
 
 			// Once context is cancelled, stop consuming messages.

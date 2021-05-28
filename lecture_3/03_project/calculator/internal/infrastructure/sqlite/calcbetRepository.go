@@ -62,46 +62,6 @@ func (r *CalcBetRepository) queryUpdateCalcBet(ctx context.Context, bet storagem
 	return err
 }
 
-func (r *CalcBetRepository) GetCalcBetByID(ctx context.Context, id string) (domainmodels.Bet, bool, error) {
-	storageBet, err := r.queryGetCalcBetByID(ctx, id)
-	if err == sql.ErrNoRows {
-		return domainmodels.Bet{}, false, nil
-	}
-	if err != nil {
-		return domainmodels.Bet{}, false, errors.Wrap(err, "calculated bet repository failed to get a bet with id "+id)
-	}
-
-	domainBet := r.calcbetMapper.MapStorageBetToDomainBet(storageBet)
-	return domainBet, true, nil
-}
-
-func (r *CalcBetRepository) queryGetCalcBetByID(ctx context.Context, id string) (storagemodels.CalcBet, error) {
-	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM calc_bets WHERE id='"+id+"';")
-	if err != nil {
-		return storagemodels.CalcBet{}, err
-	}
-	defer row.Close()
-
-	// This will move to the "next" result (which is the only result, because a single bet is fetched).
-	row.Next()
-
-	var selectionId string
-	var selectionCoefficient int
-	var payment int
-
-	err = row.Scan(&id, &selectionId, &selectionCoefficient, &payment)
-	if err != nil {
-		return storagemodels.CalcBet{}, err
-	}
-
-	return storagemodels.CalcBet{
-		Id:                   id,
-		SelectionId:          selectionId,
-		SelectionCoefficient: selectionCoefficient,
-		Payment:              payment,
-	}, nil
-}
-
 func (r *CalcBetRepository) GetCalcBetsBySelectionID(ctx context.Context, selectionId string) ([]domainmodels.Bet, bool, error) {
 	storageBets, err := r.queryGetCalcBetsBySelectionID(ctx, selectionId)
 	if err == sql.ErrNoRows {
