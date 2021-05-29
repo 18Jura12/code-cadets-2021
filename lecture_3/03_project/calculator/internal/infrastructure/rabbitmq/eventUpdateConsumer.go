@@ -52,7 +52,6 @@ func (c *EventUpdateConsumer) Consume(ctx context.Context) (<-chan models.EventU
 
 	eventUpdates := make(chan models.EventUpdate)
 	go func() {
-
 		defer close(eventUpdates)
 		for msg := range msgs {
 			var eventUpdate models.EventUpdate
