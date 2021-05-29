@@ -19,6 +19,7 @@ func New(consumer Consumer, handler Handler, publisher Publisher) *Engine {
 	}
 }
 
+
 func (e *Engine) Start(ctx context.Context) {
 	err := e.processBets(ctx)
 	if err != nil {
@@ -51,9 +52,9 @@ func (e *Engine) processEventUpdates(ctx context.Context) error {
 		return err
 	}
 
-	resultingBetsCalculated := e.handler.HandleEventUpdates(ctx, consumedEventUpdates)
 
-	e.publisher.PublishBetsCalculated(ctx, resultingBetsCalculated)
+	resultingBets := e.handler.HandleEventUpdates(ctx, consumedEventUpdates)
+	e.publisher.PublishBetsCalculated(ctx, resultingBets)
 
 	return nil
 }

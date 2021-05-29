@@ -8,3 +8,4 @@ github.com/streadway/amqp v1.0.0 h1:kuuDrUJFZL1QYL9hUNuCxNObNzB0bV/ZG5jV3RWAQgo=
 github.com/streadway/amqp v1.0.0/go.mod h1:AZpEONHx3DKn8O/DFsRAY58/XVQiIPMTMB1SddzLXVw=
 github.com/superbet-group/code-cadets-2021/lecture_3/03_project/controller v0.0.0-20210522111216-09b4d105670d h1:kTKC0Jm+ke5JjhFublthKHvubGdohmLUwKCHPe3MHeE=
 github.com/superbet-group/code-cadets-2021/lecture_3/03_project/controller v0.0.0-20210522111216-09b4d105670d/go.mod h1:oQDciM7Q7aMrhzlBCONLQrvqQvlLf9Ws6J18aBea5U4=
+

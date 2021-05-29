@@ -4,6 +4,7 @@ import (
 	"context"
 	"encoding/json"
 	"github.com/superbet-group/code-cadets-2021/lecture_3/03_project/calculator/internal/infrastructure/rabbitmq/models"
+
 	"log"
 
 	"github.com/pkg/errors"

@@ -13,6 +13,7 @@ type Consumer struct {
 func New(betConsumer BetConsumer, eventUpdateConsumer EventUpdateConsumer) *Consumer {
 	return &Consumer{
 		betConsumer: betConsumer,
+
 		eventUpdateConsumer: eventUpdateConsumer,
 	}
 }

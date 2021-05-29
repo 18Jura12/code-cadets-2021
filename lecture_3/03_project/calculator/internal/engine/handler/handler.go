@@ -87,6 +87,7 @@ func (h *Handler) HandleEventUpdates(
 				select {
 				case betsCalculated <- betCalculated:
 					log.Println("Updated bet, betId: ", betCalculated.Id, ", status: ", betCalculated.Status, ", payout: ", betCalculated.Payout)
+
 				case <-ctx.Done():
 					return
 				}
