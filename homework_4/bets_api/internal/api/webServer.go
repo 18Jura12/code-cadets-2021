@@ -11,7 +11,7 @@ import (
 
 const betByIdPath = "/bet/:id"
 const betsByUserIdPath = "/user/:id/bets"
-const betsByStatusPath = "/bets?status={parameter}"
+const betsByStatusPath = "/bets"
 
 type WebServer struct {
 	router             *gin.Engine

@@ -6,6 +6,6 @@ func NewStatusValidator() *StatusValidator {
 	return &StatusValidator{}
 }
 
-func StatusIsValid(status string) bool {
+func (s *StatusValidator) StatusIsValid(status string) bool {
 	return status == "active" || status == "lost" || status == "won"
 }

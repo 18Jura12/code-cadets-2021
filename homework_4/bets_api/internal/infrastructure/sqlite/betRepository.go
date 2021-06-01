@@ -1,8 +1,8 @@
 package sqlite
 
 import (
+	"context"
 	"database/sql"
-	"github.com/gin-gonic/gin"
 	"github.com/pkg/errors"
 	domainmodels "github.com/superbet-group/code-cadets-2021/homework_4/bets_api/internal/api/controllers/models"
 	storagemodels "github.com/superbet-group/code-cadets-2021/homework_4/bets_api/internal/infrastructure/sqlite/models"
@@ -20,7 +20,7 @@ func NewBetRepository(dbExecutor DatabaseExecutor, betMapper BetMapper) *BetRepo
 	}
 }
 
-func (r *BetRepository) GetBetById(ctx gin.Context, id string) (domainmodels.BetResponseDto, bool, error) {
+func (r *BetRepository) GetBetById(ctx context.Context, id string) (domainmodels.BetResponseDto, bool, error) {
 	storageBet, err := r.queryGetBetById(ctx, id)
 	if err == sql.ErrNoRows {
 		return domainmodels.BetResponseDto{}, false, nil
@@ -33,7 +33,7 @@ func (r *BetRepository) GetBetById(ctx gin.Context, id string) (domainmodels.Bet
 	return domainBet, true, nil
 }
 
-func (r *BetRepository) queryGetBetById(ctx gin.Context, id string) (storagemodels.Bet, error) {
+func (r *BetRepository) queryGetBetById(ctx context.Context, id string) (storagemodels.Bet, error) {
 	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM bets WHERE id='"+id+"';")
 	if err != nil {
 		return storagemodels.Bet{}, err
@@ -71,7 +71,7 @@ func (r *BetRepository) queryGetBetById(ctx gin.Context, id string) (storagemode
 	}, nil
 }
 
-func (r *BetRepository) GetBetsByUserId(ctx gin.Context, userId string) ([]domainmodels.BetResponseDto, bool, error) {
+func (r *BetRepository) GetBetsByUserId(ctx context.Context, userId string) ([]domainmodels.BetResponseDto, bool, error) {
 	storageBets, err := r.queryGetBetsByUserId(ctx, userId)
 	if err == sql.ErrNoRows {
 		return nil, false, nil
@@ -87,7 +87,7 @@ func (r *BetRepository) GetBetsByUserId(ctx gin.Context, userId string) ([]domai
 	return domainBets, true, nil
 }
 
-func (r *BetRepository) queryGetBetsByUserId(ctx gin.Context, userId string) ([]storagemodels.Bet, error) {
+func (r *BetRepository) queryGetBetsByUserId(ctx context.Context, userId string) ([]storagemodels.Bet, error) {
 	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM bets WHERE customer_id='"+userId+"';")
 	if err != nil {
 		return nil, err
@@ -125,7 +125,7 @@ func (r *BetRepository) queryGetBetsByUserId(ctx gin.Context, userId string) ([]
 	return rows, nil
 }
 
-func (r *BetRepository) GetBetsByStatus(ctx gin.Context, status string) ([]domainmodels.BetResponseDto, bool, error) {
+func (r *BetRepository) GetBetsByStatus(ctx context.Context, status string) ([]domainmodels.BetResponseDto, bool, error) {
 	storageBets, err := r.queryGetBetsByStatus(ctx, status)
 	if err == sql.ErrNoRows {
 		return nil, false, nil
@@ -141,7 +141,7 @@ func (r *BetRepository) GetBetsByStatus(ctx gin.Context, status string) ([]domai
 	return domainBets, true, nil
 }
 
-func (r *BetRepository) queryGetBetsByStatus(ctx gin.Context, status string) ([]storagemodels.Bet, error) {
+func (r *BetRepository) queryGetBetsByStatus(ctx context.Context, status string) ([]storagemodels.Bet, error) {
 	row, err := r.dbExecutor.QueryContext(ctx, "SELECT * FROM bets WHERE status='"+status+"';")
 	if err != nil {
 		return nil, err
