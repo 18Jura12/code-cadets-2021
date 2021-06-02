@@ -6,15 +6,14 @@ var Cfg Config
 
 // Config contains all the configuration needed for service to work.
 type Config struct {
-	Api    apiConfig    `split_words:"true"`
-	SqliteDatabase string       `split_words:"true"`
+	Api            apiConfig `split_words:"true"`
+	SqliteDatabase string    `split_words:"true"`
 }
 
 type apiConfig struct {
 	ReadWriteTimeoutMs int `split_words:"true" default:"10000"`
 	Port               int `split_words:"true" default:"8081"`
 }
-
 
 // Load loads the configuration on bootstrap, this avoid injecting the same config object
 // everywhere.
