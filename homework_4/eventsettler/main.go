@@ -22,7 +22,7 @@ type eventUpdateDto struct {
 }
 
 type betDto struct {
-	SelectionId          string `json:"SelectionId"`
+	SelectionId string `json:"SelectionId"`
 }
 
 func failOnError(err error, msg string) {
@@ -71,7 +71,7 @@ func main() {
 
 	var selectionIds []betDto
 	err = json.Unmarshal(bodyContentSelectionIds, &selectionIds)
-	failOnError(err, "unmarshalling the JSON body content: " + string(bodyContentSelectionIds))
+	failOnError(err, "unmarshalling the JSON body content: "+string(bodyContentSelectionIds))
 
 	unique := make(map[string]bool)
 	for _, bet := range selectionIds {
@@ -87,7 +87,7 @@ func main() {
 		}
 
 		eventUpdate := &eventUpdateDto{
-			Id: selectionId,
+			Id:      selectionId,
 			Outcome: outcome,
 		}
 
