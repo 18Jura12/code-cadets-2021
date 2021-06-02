@@ -5,7 +5,7 @@ import (
 	storagemodels "github.com/superbet-group/code-cadets-2021/homework_4/bets_api/internal/infrastructure/sqlite/models"
 )
 
-type BetMapper struct {}
+type BetMapper struct{}
 
 func NewBetMapper() *BetMapper {
 	return &BetMapper{}

@@ -6,16 +6,16 @@ import (
 )
 
 type Controller struct {
-	idValidator IdValidator
+	idValidator     IdValidator
 	statusValidator StatusValidator
-	betService BetService
+	betService      BetService
 }
 
 func NewController(idValidator IdValidator, statusValidator StatusValidator, betService BetService) *Controller {
 	return &Controller{
-		idValidator: idValidator,
+		idValidator:     idValidator,
 		statusValidator: statusValidator,
-		betService: betService,
+		betService:      betService,
 	}
 }
 
@@ -88,4 +88,3 @@ func (b *Controller) FetchBetsByStatus() gin.HandlerFunc {
 		ctx.JSON(http.StatusOK, resultingBets)
 	}
 }
-

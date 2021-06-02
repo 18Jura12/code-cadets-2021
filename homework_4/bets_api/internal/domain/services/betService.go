@@ -16,7 +16,7 @@ func NewBetService(betRepository BetRepository) *BetService {
 	}
 }
 
-func (s *BetService) GetBetById(ctx context.Context ,id string) (domainmodels.BetResponseDto, error) {
+func (s *BetService) GetBetById(ctx context.Context, id string) (domainmodels.BetResponseDto, error) {
 	resultingBet, exists, err := s.betRepository.GetBetById(ctx, id)
 	if !exists {
 		err = errors.WithMessage(err, "no such bet")

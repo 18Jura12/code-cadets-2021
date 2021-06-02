@@ -6,7 +6,7 @@ import (
 )
 
 type BetService interface {
-	GetBetById(ctx context.Context ,id string) (domainmodels.BetResponseDto, error)
-	GetBetsByUserId(ctx context.Context ,userId string) ([]domainmodels.BetResponseDto, error)
-	GetBetsByStatus(ctx context.Context ,status string) ([]domainmodels.BetResponseDto, error)
+	GetBetById(ctx context.Context, id string) (domainmodels.BetResponseDto, error)
+	GetBetsByUserId(ctx context.Context, userId string) ([]domainmodels.BetResponseDto, error)
+	GetBetsByStatus(ctx context.Context, status string) ([]domainmodels.BetResponseDto, error)
 }
