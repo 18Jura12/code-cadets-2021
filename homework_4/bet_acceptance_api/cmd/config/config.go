@@ -27,3 +27,4 @@ func Load() {
 		panic(err)
 	}
 }
+

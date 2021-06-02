@@ -51,3 +51,4 @@ func Api(rabbitMqChannel *amqp.Channel) *api.WebServer {
 
 	return api.NewServer(config.Cfg.Api.Port, config.Cfg.Api.ReadWriteTimeoutMs, controller)
 }
+

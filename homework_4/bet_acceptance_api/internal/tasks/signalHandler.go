@@ -22,3 +22,4 @@ func (s *SignalHandler) Start(ctx context.Context) {
 	case <-ctx.Done():
 	}
 }
+

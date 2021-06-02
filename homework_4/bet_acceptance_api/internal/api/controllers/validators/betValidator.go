@@ -33,3 +33,4 @@ func (b *BetValidator) isPaymentValid(payment float64) bool {
 	return 	payment != 0 || payment >= b.paymentLowerBound ||
 			payment <= b.paymentLowerBound
 }
+

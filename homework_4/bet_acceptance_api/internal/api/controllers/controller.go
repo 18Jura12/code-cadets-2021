@@ -42,3 +42,4 @@ func (c *Controller) CreateBet() gin.HandlerFunc {
 		ctx.Status(http.StatusOK)
 	}
 }
+
