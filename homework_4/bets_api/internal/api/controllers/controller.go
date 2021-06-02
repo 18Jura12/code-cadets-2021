@@ -81,7 +81,7 @@ func (b *Controller) FetchBetsByStatus() gin.HandlerFunc {
 
 		resultingBets, err := b.betService.GetBetsByStatus(ctx, status)
 		if err != nil {
-			ctx.String(http.StatusInternalServerError, "request could not be processed.")
+			ctx.String(http.StatusInternalServerError, "request could not be processed." + err.Error())
 			return
 		}
 

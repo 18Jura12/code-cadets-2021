@@ -160,11 +160,16 @@ func (r *BetRepository) queryGetBetsByStatus(ctx context.Context, status string)
 		var selectionId string
 		var selectionCoefficient int
 		var payment int
-		var payout int
+		var payoutSql sql.NullInt64
 
-		err = row.Scan(&id, &userId, &status, &selectionId, &selectionCoefficient, &payment, &payout)
+		err = row.Scan(&id, &userId, &status, &selectionId, &selectionCoefficient, &payment, &payoutSql)
 		if err != nil {
 			return nil, err
+		}
+
+		var payout int
+		if payoutSql.Valid {
+			payout = int(payoutSql.Int64)
 		}
 
 		rows = append(
