@@ -100,3 +100,4 @@ func main() {
 		log.Printf("Sent %s", eventUpdateJson)
 	}
 }
+
