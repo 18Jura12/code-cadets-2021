@@ -16,6 +16,7 @@ import (
 const getSelectionIds = "http://127.0.0.1:8081/bets?status=active"
 const postEventUpdate = "http://127.0.0.1:8080/event/update"
 
+//EventUpdateDto structure
 type eventUpdateDto struct {
 	Id      string `json:"id"`
 	Outcome string `json:"outcome"`
