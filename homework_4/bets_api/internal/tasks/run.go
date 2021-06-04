@@ -27,4 +27,3 @@ func RunTasks(tasks ...Task) {
 type Task interface {
 	Start(ctx context.Context)
 }
-

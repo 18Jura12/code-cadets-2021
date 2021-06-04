@@ -28,8 +28,10 @@ func (c *Controller) CreateBet() gin.HandlerFunc {
 			return
 		}
 
-		if !c.betValidator.IsBetValid(betRequestDto) {
-			ctx.String(http.StatusBadRequest, "bet request is not valid.")
+		var valid bool
+		valid, err = c.betValidator.IsBetValid(betRequestDto)
+		if !valid {
+			ctx.String(http.StatusBadRequest, "bet request is not valid: " + err.Error())
 			return
 		}
 
@@ -42,3 +44,4 @@ func (c *Controller) CreateBet() gin.HandlerFunc {
 		ctx.Status(http.StatusOK)
 	}
 }
+

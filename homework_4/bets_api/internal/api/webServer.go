@@ -9,7 +9,9 @@ import (
 	"time"
 )
 
-const betPath = "/bet"
+const betByIdPath = "/bet/:id"
+const betsByUserIdPath = "/user/:id/bets"
+const betsByStatusPath = "/bets"
 
 type WebServer struct {
 	router             *gin.Engine
@@ -17,13 +19,13 @@ type WebServer struct {
 	readWriteTimeoutMs int
 }
 
-func NewServer(port, readWriteTimeoutMs int, ctrl Controller) *WebServer {
+func NewServer(port, readWriteTimeoutMs int, controller Controller) *WebServer {
 	server := &WebServer{
 		router:             gin.Default(),
 		port:               port,
 		readWriteTimeoutMs: readWriteTimeoutMs,
 	}
-	server.registerRoutes(ctrl)
+	server.registerRoutes(controller)
 	return server
 }
 
@@ -62,11 +64,15 @@ func (w *WebServer) Start(ctx context.Context) {
 	}
 }
 
-func (w *WebServer) registerRoutes(ctrl Controller) {
-	w.router.POST(betPath, ctrl.CreateBet())
+func (w *WebServer) registerRoutes(controller Controller) {
+	w.router.GET(betByIdPath, controller.GetBetById())
+	w.router.GET(betsByUserIdPath, controller.GetBetsByUserId())
+	w.router.GET(betsByStatusPath, controller.GetBetsByStatus())
 }
 
+// Controller handles api calls
 type Controller interface {
-	CreateBet() gin.HandlerFunc
+	GetBetById() gin.HandlerFunc
+	GetBetsByUserId() gin.HandlerFunc
+	GetBetsByStatus() gin.HandlerFunc
 }
-

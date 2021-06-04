@@ -15,3 +15,4 @@ func RabbitMq() *amqp.Channel {
 
 	return channel
 }
+
