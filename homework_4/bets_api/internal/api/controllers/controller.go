@@ -19,7 +19,7 @@ func NewController(idValidator IdValidator, statusValidator StatusValidator, bet
 	}
 }
 
-func (b *Controller) FetchBetById() gin.HandlerFunc {
+func (b *Controller) GetBetById() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		id := ctx.Params.ByName("id")
 		if id == "" {
@@ -42,7 +42,7 @@ func (b *Controller) FetchBetById() gin.HandlerFunc {
 	}
 }
 
-func (b *Controller) FetchBetsByUserId() gin.HandlerFunc {
+func (b *Controller) GetBetsByUserId() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		userId := ctx.Params.ByName("id")
 		if userId == "" {
@@ -57,8 +57,7 @@ func (b *Controller) FetchBetsByUserId() gin.HandlerFunc {
 
 		resultingBets, err := b.betService.GetBetsByUserId(ctx, userId)
 		if err != nil {
-			ctx.String(http.StatusInternalServerError, err.Error())
-			//ctx.String(http.StatusInternalServerError, "request could not be processed.")
+			ctx.String(http.StatusInternalServerError, "request could not be processed.")
 			return
 		}
 
@@ -66,7 +65,7 @@ func (b *Controller) FetchBetsByUserId() gin.HandlerFunc {
 	}
 }
 
-func (b *Controller) FetchBetsByStatus() gin.HandlerFunc {
+func (b *Controller) GetBetsByStatus() gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		status := ctx.Query("status")
 		if status == "" {

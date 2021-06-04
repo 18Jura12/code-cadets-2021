@@ -22,3 +22,4 @@ func main() {
 
 	log.Println("Bet Acceptance API finished gracefully")
 }
+

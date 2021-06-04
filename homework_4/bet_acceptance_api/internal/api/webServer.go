@@ -69,3 +69,4 @@ func (w *WebServer) registerRoutes(ctrl Controller) {
 type Controller interface {
 	CreateBet() gin.HandlerFunc
 }
+

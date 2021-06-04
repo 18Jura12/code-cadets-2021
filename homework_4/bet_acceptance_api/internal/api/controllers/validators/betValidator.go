@@ -1,6 +1,7 @@
 package validators
 
 import (
+	"github.com/pkg/errors"
 	"github.com/superbet-group/code-cadets-2021/homework_4/bet_accceptance_api/internal/api/controllers/models"
 )
 
@@ -18,10 +19,20 @@ func NewBetValidator(selectionCoefficientUpperBound, paymentLowerBound, paymentU
 	}
 }
 
-func (b *BetValidator) IsBetValid(betRequest models.BetRequestDto) bool {
-	return 	betRequest.SelectionId != "" && betRequest.CustomerId != "" &&
-			b.isSelectionCoefficientValid(betRequest.SelectionCoefficient) &&
-			b.isPaymentValid(betRequest.Payment)
+func (b *BetValidator) IsBetValid(betRequest models.BetRequestDto) (bool, error) {
+	if 	betRequest.SelectionId != "" {
+		return false, errors.New("invalid selection id")
+	}
+	if  betRequest.CustomerId != "" {
+		return false, errors.New("invalid customer id")
+	}
+	if  b.isSelectionCoefficientValid(betRequest.SelectionCoefficient) {
+		return false, errors.New("invalid selection coefficient")
+	}
+	if  b.isPaymentValid(betRequest.Payment) {
+		return false, errors.New("invalid payment")
+	}
+	return true, nil
 }
 
 func (b *BetValidator) isSelectionCoefficientValid(selectionCoefficient float64) bool {
@@ -33,3 +44,4 @@ func (b *BetValidator) isPaymentValid(payment float64) bool {
 	return 	payment != 0 || payment >= b.paymentLowerBound ||
 			payment <= b.paymentLowerBound
 }
+

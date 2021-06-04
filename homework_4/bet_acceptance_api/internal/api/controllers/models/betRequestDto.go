@@ -6,3 +6,4 @@ type BetRequestDto struct {
 	SelectionCoefficient float64 `json:"selectionCoefficient"`
 	Payment              float64 `json:"payment"`
 }
+

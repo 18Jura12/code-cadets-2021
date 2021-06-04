@@ -7,6 +7,14 @@ var Cfg Config
 type Config struct {
 	Rabbit rabbitConfig `split_words:"true"`
 	Api    apiConfig    `split_words:"true"`
+	ConstVariables constConfig `split_words:"true"`
+}
+
+type constConfig struct {
+	SelectionCoefficientUpperBound float64 `split_words:"true" default:"10"`
+	PaymentLowerBound float64 `split_words:"true" default:"2"`
+	PaymentUpperBound float64 `split_words:"true" default:"100"`
+
 }
 
 type apiConfig struct {
@@ -27,3 +35,4 @@ func Load() {
 		panic(err)
 	}
 }
+

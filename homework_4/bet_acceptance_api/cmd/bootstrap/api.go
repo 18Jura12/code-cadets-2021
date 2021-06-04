@@ -10,15 +10,12 @@ import (
 	"github.com/superbet-group/code-cadets-2021/homework_4/bet_accceptance_api/internal/infrastructure/rabbitmq"
 )
 
-const selectionCoefficientUpperBound = 10
-const paymentLowerBound = 2
-const paymentUpperBound = 100
 
 func newBetValidator() *validators.BetValidator {
 	return validators.NewBetValidator(
-		selectionCoefficientUpperBound,
-		paymentLowerBound,
-		paymentUpperBound,
+		config.Cfg.ConstVariables.SelectionCoefficientUpperBound,
+		config.Cfg.ConstVariables.PaymentLowerBound,
+		config.Cfg.ConstVariables.PaymentUpperBound,
 	)
 }
 
@@ -51,3 +48,4 @@ func Api(rabbitMqChannel *amqp.Channel) *api.WebServer {
 
 	return api.NewServer(config.Cfg.Api.Port, config.Cfg.Api.ReadWriteTimeoutMs, controller)
 }
+

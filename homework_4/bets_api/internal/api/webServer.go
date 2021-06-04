@@ -65,14 +65,14 @@ func (w *WebServer) Start(ctx context.Context) {
 }
 
 func (w *WebServer) registerRoutes(controller Controller) {
-	w.router.GET(betByIdPath, controller.FetchBetById())
-	w.router.GET(betsByUserIdPath, controller.FetchBetsByUserId())
-	w.router.GET(betsByStatusPath, controller.FetchBetsByStatus())
+	w.router.GET(betByIdPath, controller.GetBetById())
+	w.router.GET(betsByUserIdPath, controller.GetBetsByUserId())
+	w.router.GET(betsByStatusPath, controller.GetBetsByStatus())
 }
 
 // Controller handles api calls
 type Controller interface {
-	FetchBetById() gin.HandlerFunc
-	FetchBetsByUserId() gin.HandlerFunc
-	FetchBetsByStatus() gin.HandlerFunc
+	GetBetById() gin.HandlerFunc
+	GetBetsByUserId() gin.HandlerFunc
+	GetBetsByStatus() gin.HandlerFunc
 }
