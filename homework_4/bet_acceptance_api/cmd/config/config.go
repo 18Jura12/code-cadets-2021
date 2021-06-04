@@ -23,7 +23,7 @@ type apiConfig struct {
 }
 
 type rabbitConfig struct {
-	PublisherBetQueueQueue string `split_words:"true"  default:"bets"`
+	PublisherBetQueueQueue string `split_words:"true"  default:"bets-received"`
 	PublisherExchange      string `split_words:"true" default:""`
 	PublisherMandatory     bool   `split_words:"true" default:"false"`
 	PublisherImmediate     bool   `split_words:"true" default:"false"`

@@ -24,7 +24,7 @@ func (c *Controller) CreateBet() gin.HandlerFunc {
 		var betRequestDto models.BetRequestDto
 		err := ctx.ShouldBindWith(&betRequestDto, binding.JSON)
 		if err != nil {
-			ctx.String(http.StatusBadRequest, "bet request is not valid.")
+			ctx.String(http.StatusBadRequest, "bet request is not valid:" + err.Error())
 			return
 		}
 
@@ -37,7 +37,7 @@ func (c *Controller) CreateBet() gin.HandlerFunc {
 
 		err = c.betService.CreateBet(betRequestDto)
 		if err != nil {
-			ctx.String(http.StatusInternalServerError, "request could not be processed.")
+			ctx.String(http.StatusInternalServerError, "request could not be processed." + err.Error())
 			return
 		}
 
