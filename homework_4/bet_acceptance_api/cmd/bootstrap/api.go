@@ -10,6 +10,7 @@ import (
 	"github.com/superbet-group/code-cadets-2021/homework_4/bet_accceptance_api/internal/infrastructure/rabbitmq"
 )
 
+
 func newBetValidator() *validators.BetValidator {
 	return validators.NewBetValidator(
 		config.Cfg.ConstVariables.SelectionCoefficientUpperBound,

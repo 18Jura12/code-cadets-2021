@@ -14,6 +14,7 @@ type constConfig struct {
 	SelectionCoefficientUpperBound float64 `split_words:"true" default:"10"`
 	PaymentLowerBound float64 `split_words:"true" default:"2"`
 	PaymentUpperBound float64 `split_words:"true" default:"100"`
+
 }
 
 type apiConfig struct {
